@@ -254,18 +254,22 @@ public class DeviceScanActivity extends ListActivity {
     // Device scan callback.
     private BluetoothAdapter.LeScanCallback mLeScanCallback =
             new BluetoothAdapter.LeScanCallback() {
-                BeaconParser beaconParser = new BeaconParser().setBeaconLayout("m:2-3=ffff,i:4-19,i:20-21,i:22-23,p:24-24,p:25:25,d:26-32");
+                BeaconParser beaconParser = new BeaconParser().setBeaconLayout("m:2-3=d8fe,i:2-3,p:5-5,d:6-6");
 
         @Override
         public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (device != null && device.toString().startsWith("C9:")) {
-                        Beacon beacon = beaconParser.fromScanData(scanRecord, rssi, device);
-                        Log.d(TAG, "my device" + device.toString());
-                        Log.d(TAG, beacon.toString());
-                        Log.d(TAG, new String(scanRecord, Charset.forName("ascii")));
+                    if (device != null && device.toString().startsWith("C9:E3:E3")) {
+                        try {
+                            Beacon beacon = beaconParser.fromScanData(scanRecord, rssi, device);
+                            Log.d(TAG, "my device" + device.toString());
+                            Log.d(TAG, beacon.toString());
+                            Log.d(TAG, new String(scanRecord, Charset.forName("ascii")));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         mLeDeviceListAdapter.addDevice(device);
                         mLeDeviceListAdapter.notifyDataSetChanged();
                     }
