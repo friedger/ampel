@@ -3,7 +3,6 @@ package com.example.android.bluetoothlegatt.service;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
@@ -116,11 +115,18 @@ public class DeviceScanService extends IntentService {
 
     private void setGoAuth(Beacon beacon){
         if (beacon != null){
+            Long lightStatus = beacon.getDataFields().get(0);
             //Start Activity here
             Intent intent = new Intent(this,TrafficLightActivity.class);
-            intent.putExtra("go_signal",beacon.getDataFields().get(0));
+            intent.putExtra("go_signal", lightStatus);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+
+            if (lightStatus.intValue() == 1) {
+                new Control().execute("connectStop", "192.168.43.87");
+            } else {
+                new Control().execute("connectForward", "192.168.43.87");
+            }
         }
     }
 
@@ -143,5 +149,6 @@ public class DeviceScanService extends IntentService {
                             }
                         }
             };
+
 }
 
