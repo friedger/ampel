@@ -5,6 +5,8 @@
 **/build
 **/intermediate
 
+*.iml
+
 # built application files
 *.apk
 *.ap_
