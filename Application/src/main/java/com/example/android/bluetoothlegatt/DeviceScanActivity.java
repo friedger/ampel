@@ -33,6 +33,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -188,17 +189,25 @@ public class DeviceScanActivity extends ListActivity {
     // Adapter for holding devices found through scanning.
     private class LeDeviceListAdapter extends BaseAdapter {
         private ArrayList<BluetoothDevice> mLeDevices;
+        private ArrayList<Beacon> mBeacons;
         private LayoutInflater mInflator;
 
         public LeDeviceListAdapter() {
             super();
             mLeDevices = new ArrayList<BluetoothDevice>();
+            mBeacons = new ArrayList<Beacon>();
             mInflator = DeviceScanActivity.this.getLayoutInflater();
         }
 
         public void addDevice(BluetoothDevice device) {
             if(!mLeDevices.contains(device)) {
                 mLeDevices.add(device);
+            }
+        }
+
+        public void addBeacon(Beacon beacon){
+            if(!mBeacons.contains(beacon)){
+                mBeacons.add(beacon);
             }
         }
 
@@ -234,11 +243,12 @@ public class DeviceScanActivity extends ListActivity {
                 viewHolder = new ViewHolder();
                 viewHolder.deviceAddress = (TextView) view.findViewById(R.id.device_address);
                 viewHolder.deviceName = (TextView) view.findViewById(R.id.device_name);
+                viewHolder.deviceGo = (ImageView) view.findViewById(R.id.device_go);
                 view.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) view.getTag();
             }
-
+/*
             BluetoothDevice device = mLeDevices.get(i);
             final String deviceName = device.getName();
             if (deviceName != null && deviceName.length() > 0)
@@ -246,6 +256,8 @@ public class DeviceScanActivity extends ListActivity {
             else
                 viewHolder.deviceName.setText(R.string.unknown_device);
             viewHolder.deviceAddress.setText(device.getAddress());
+            viewHolder.deviceGo.setImageResource();
+            */
 
             return view;
         }
@@ -278,8 +290,12 @@ public class DeviceScanActivity extends ListActivity {
         }
     };
 
+
+
+
     static class ViewHolder {
         TextView deviceName;
         TextView deviceAddress;
+        ImageView deviceGo;
     }
 }
