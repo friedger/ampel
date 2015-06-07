@@ -26,7 +26,9 @@ Background
 We used the Arduino IDE to program the RFduino with a RGB/button shield. The state of the light is changed by pressing
 one or the other button.
 
-The app is based on the BluetoothLeGatt example that comes with Android Studio.
+The app is based on the BluetoothLeGatt example that comes with Android Studio and the [HTTYR Android control app](https://lejosnews.wordpress.com/2014/05/02/httyr-android-control-app/)
+
+Unfortunately, the mirror could not manage BLE and Wifi hotspot at the same time gracefully.
 
 Pre-requisites
 --------------
