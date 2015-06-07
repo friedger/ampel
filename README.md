@@ -1,59 +1,53 @@
 
-Android BluetoothLeGatt Sample
+Ampel
 ===================================
 
-This sample demonstrates how to use the Bluetooth LE Generic Attribute Profile (GATT)
-to transmit arbitrary data between devices.
+This app results from a short hackathon at droidcon Berlin 2015 (6 June 2015).
+It informs car drivers (who are checking their mobile phones) when a red traffic light switches to green.
 
-Introduction
+Description
 ------------
 
-This sample shows a list of available Bluetooth LE devices and provides
-an interface to connect, display data and display GATT services and
-characteristics supported by the devices.
+This app is installed on an Android device in a car. During the hackathon we used the Panasonic Mirror.
+In addition, the mirror is wirelessly connected to the car engine (a Lego EV3).
 
-It creates a [Service][1] for managing connection and data communication with a GATT server
-hosted on a given Bluetooth LE device.
+The app starts a foreground service that scans for Bluetooth LE devices.
+These devices broadcast their state (red or green) using the Uribeacon format (beaconLayout). As we only had one RFduino and
+there were many BLE devices around us we also filtered by mac address.
+In the real implementation, a specific beacon Layout will be defined, that is used
+for filtering.
 
-The Activities communicate with the Service, which in turn interacts with the [Bluetooth LE API][2].
+When the car approaches a beacon the app informs the user about the state of the traffic light by showing
+a large green or red icon is shown. For autonomous cars like we used, the app sends control commands to the Lego
+brick to start or stop the engine motors.
 
-[1]:http://developer.android.com/reference/android/app/Service.html
-[2]:https://developer.android.com/reference/android/bluetooth/BluetoothGatt.html
+Background
+----------
+We used the Arduino IDE to program the RFduino with a RGB/button shield. The state of the light is changed by pressing
+one or the other button.
+
+The app is based on the BluetoothLeGatt example that comes with Android Studio.
 
 Pre-requisites
 --------------
 
+- RFDuino with RGB/button shield
+- Lego mindstorm EV3
+- Android device with Android 4.3
 - Android SDK v22
 - Android Build Tools v22.0.1
 - Android Support Repository
 
-Screenshots
--------------
 
-<img src="screenshots/1-main.png" height="400" alt="Screenshot"/> <img src="screenshots/2-detail.png" height="400" alt="Screenshot"/> 
-
-Getting Started
----------------
-
-This sample uses the Gradle build system. To build this project, use the
-"gradlew build" command or use "Import Project" in Android Studio.
-
-Support
--------
-
-- Google+ Community: https://plus.google.com/communities/105153134372062985968
-- Stack Overflow: http://stackoverflow.com/questions/tagged/android
-
-If you've found an error in this sample, please file an issue:
-https://github.com/googlesamples/android-BluetoothLeGatt
-
-Patches are encouraged, and may be submitted by forking this project and
-submitting a pull request through GitHub. Please see CONTRIBUTING.md for more details.
+Open Source Licenses
+--------------------
+We use open source software from
+* The Andrdoid Open Source Project, Inc. under APL 2.0
 
 License
 -------
 
-Copyright 2014 The Android Open Source Project, Inc.
+Copyright 2015 The Ampel Team
 
 Licensed to the Apache Software Foundation (ASF) under one or more contributor
 license agreements.  See the NOTICE file distributed with this work for

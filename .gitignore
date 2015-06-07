@@ -6,7 +6,7 @@
 **/intermediate
 
 *.iml
-
+*.yaml
 # built application files
 *.apk
 *.ap_
